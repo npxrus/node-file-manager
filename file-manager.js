@@ -1,10 +1,7 @@
-import { getUserName } from './helpers/args.helper.js';
-import { printGreeting } from './services/log.service.js';
-
 const init = () => {
-  const username = getUserName();
-
-  printGreeting(username);
+  console.log(
+    `Welcome to the File Manager, ${process.env.npm_config_username}`
+  );
 };
 
 init();
