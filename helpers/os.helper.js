@@ -1,4 +1,4 @@
-const os = require('os');
+import os from 'os';
 
 const osHelper = (arg) => {
   switch (arg) {
@@ -23,4 +23,4 @@ const osHelper = (arg) => {
   }
 };
 
-module.exports = osHelper;
+export default osHelper;

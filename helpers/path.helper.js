@@ -1,5 +1,5 @@
-const os = require('os');
-const path = require('path');
+import os from 'os';
+import path from 'path';
 
 const rootDir = os.homedir();
 
@@ -8,4 +8,4 @@ const isCorrectPath = (root, dir) => {
   return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
 };
 
-module.exports = { rootDir, isCorrectPath };
+export { rootDir, isCorrectPath };

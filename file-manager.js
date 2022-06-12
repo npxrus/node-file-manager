@@ -1,16 +1,24 @@
-const readline = require('readline');
-const osHelper = require('./helpers/os.helper.js');
-const hashHelper = require('./helpers/hash.helper.js');
-const zipHelper = require('./helpers/zip.helper');
-const fileHelper = require('./helpers/file.helper.js');
-const pathHelper = require('./helpers/path.helper.js');
-const navigationHelper = require('./helpers/navigation.helper.js');
+import { createInterface } from 'readline';
+
+import osHelper from './helpers/os.helper.js';
+import calculateHash from './helpers/hash.helper.js';
+import { compress, decompress } from './helpers/zip.helper.js';
+import {
+  add,
+  read,
+  remove,
+  rename,
+  move,
+  copy,
+} from './helpers/file.helper.js';
+import { rootDir } from './helpers/path.helper.js';
+import { up, cd, ls } from './helpers/navigation.helper.js';
 
 const username = process.env.npm_config_username;
-const root = pathHelper.rootDir;
+const root = rootDir;
 let currentDirectory = root;
 
-const rl = readline.createInterface({
+const rl = createInterface({
   input: process.stdin,
   output: process.stdout,
   prompt: `You are currently in ${currentDirectory}\nEnter your command> `,
@@ -24,57 +32,60 @@ const init = () => {
     const [command, ...args] = line.trim().split(' ');
     switch (command) {
       case 'up':
-        currentDirectory = navigationHelper.up(currentDirectory);
+        currentDirectory = up(currentDirectory);
         rl.setPrompt(
           `You are currently in ${currentDirectory}\nEnter your command> `
         );
         break;
       case 'cd':
-        currentDirectory = navigationHelper.cd(currentDirectory, args[0]);
+        currentDirectory = cd(currentDirectory, args[0]);
         rl.setPrompt(
           `You are currently in ${currentDirectory}\nEnter your command> `
         );
 
         break;
       case 'ls':
-        navigationHelper.ls(currentDirectory);
+        ls(currentDirectory);
         rl.setPrompt(
           `You are currently in ${currentDirectory}\nEnter your command> `
         );
         break;
       case 'cat':
-        fileHelper.read(args[0]);
+        read(args[0]);
         break;
       case 'add':
-        fileHelper.add(args[0], currentDirectory);
+        add(args[0], currentDirectory);
         break;
       case 'rn':
-        fileHelper.rename(args[0], args[1]);
+        rename(args[0], args[1]);
         break;
       case 'cp':
-        fileHelper.copy(args[0], args[1]);
+        copy(args[0], args[1]);
         break;
       case 'mv':
-        fileHelper.move(args[0], args[1]);
+        move(args[0], args[1]);
         break;
       case 'rm':
-        fileHelper.remove(args[0]);
+        remove(args[0]);
         break;
       case 'os':
         osHelper(args[0]);
         break;
       case 'hash':
-        hashHelper(args[0]);
+        calculateHash(args[0]);
         break;
       case 'compress':
-        zipHelper.compress(args[0], args[1]);
+        compress(args[0], args[1]);
         break;
       case 'decompress':
-        zipHelper.decompress(args[0], args[1]);
+        decompress(args[0], args[1]);
         break;
       case '.exit':
         console.log(`Thank you for using File Manager, ${username}!`);
         process.exit(0);
+      default:
+        console.error('Invalid input');
+        break;
     }
     rl.prompt();
   }).on('close', () => {

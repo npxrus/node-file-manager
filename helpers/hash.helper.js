@@ -1,4 +1,4 @@
-const promises = require('fs/promises');
+import { promises } from 'fs';
 
 const calculateHash = async (path) => {
   let data;
@@ -9,11 +9,11 @@ const calculateHash = async (path) => {
     console.error('Operation failed');
   }
 
-  const { createHash } = require('crypto');
+  const { createHash } = await import('crypto');
   const hash = createHash('sha256');
 
   hash.update(data);
   console.log(hash.digest('hex'));
 };
 
-module.exports = calculateHash;
+export default calculateHash;

@@ -1,9 +1,9 @@
-const promises = require('fs/promises');
-const path = require('path');
-const pathHelper = require('./path.helper');
+import { promises } from 'fs';
+import path from 'path';
+import { rootDir } from './path.helper.js';
 
 const up = (src) => {
-  if (src === pathHelper.rootDir) {
+  if (src === rootDir) {
     return src;
   } else {
     return path.normalize(path.join(src, '/..'));
@@ -29,4 +29,4 @@ const ls = async (src) => {
   }
 };
 
-module.exports = { up, cd, ls };
+export { up, cd, ls };

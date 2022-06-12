@@ -1,9 +1,5 @@
-const { constants } = require('fs');
-const promises = require('fs/promises');
-const path = require('path');
-const pathHelper = require('./path.helper');
-
-const root = pathHelper.rootDir;
+import { constants, promises } from 'fs';
+import path from 'path';
 
 const read = async (src) => {
   try {
@@ -60,4 +56,4 @@ const move = async (src, dest) => {
   remove(src);
 };
 
-module.exports = { add, read, rename, copy, move, remove };
+export { add, read, rename, copy, move, remove };

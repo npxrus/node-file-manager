@@ -1,7 +1,7 @@
-const path = require('path');
-const { pipeline } = require('stream/promises');
-const { createReadStream, createWriteStream } = require('fs');
-const { createGzip, createGunzip } = require('zlib');
+import path from 'path';
+import { pipeline } from 'stream/promises';
+import { createReadStream, createWriteStream } from 'fs';
+import { createGzip, createGunzip } from 'zlib';
 
 const compress = async (src, dest) => {
   const archivePath = path.join(dest, path.parse(src).base + '.gz');
@@ -29,4 +29,4 @@ const decompress = async (src, dest) => {
   }
 };
 
-module.exports = { compress, decompress };
+export { compress, decompress };
