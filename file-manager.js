@@ -4,6 +4,7 @@ const hashHelper = require('./helpers/hash.helper.js');
 const zipHelper = require('./helpers/zip.helper');
 const fileHelper = require('./helpers/file.helper.js');
 const pathHelper = require('./helpers/path.helper.js');
+const navigationHelper = require('./helpers/navigation.helper.js');
 
 const username = process.env.npm_config_username;
 const root = pathHelper.rootDir;
@@ -22,6 +23,25 @@ const init = () => {
   rl.on('line', (line) => {
     const [command, ...args] = line.trim().split(' ');
     switch (command) {
+      case 'up':
+        currentDirectory = navigationHelper.up(currentDirectory);
+        rl.setPrompt(
+          `You are currently in ${currentDirectory}\nEnter your command> `
+        );
+        break;
+      case 'cd':
+        currentDirectory = navigationHelper.cd(currentDirectory, args[0]);
+        rl.setPrompt(
+          `You are currently in ${currentDirectory}\nEnter your command> `
+        );
+
+        break;
+      case 'ls':
+        navigationHelper.ls(currentDirectory);
+        rl.setPrompt(
+          `You are currently in ${currentDirectory}\nEnter your command> `
+        );
+        break;
       case 'cat':
         fileHelper.read(args[0]);
         break;
