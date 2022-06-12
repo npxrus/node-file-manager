@@ -2,14 +2,18 @@ const readline = require('readline');
 const osHelper = require('./helpers/os.helper.js');
 const hashHelper = require('./helpers/hash.helper.js');
 const zipHelper = require('./helpers/zip.helper');
+const fileHelper = require('./helpers/file.helper.js');
+const pathHelper = require('./helpers/path.helper.js');
+
+const username = process.env.npm_config_username;
+const root = pathHelper.rootDir;
+let currentDirectory = root;
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
-  prompt: 'Enter your command> ',
+  prompt: `You are currently in ${currentDirectory}\nEnter your command> `,
 });
-
-const username = process.env.npm_config_username;
 
 const init = () => {
   console.log(`Welcome to the File Manager, ${username}`);
@@ -18,6 +22,24 @@ const init = () => {
   rl.on('line', (line) => {
     const [command, ...args] = line.trim().split(' ');
     switch (command) {
+      case 'cat':
+        fileHelper.read(args[0]);
+        break;
+      case 'add':
+        fileHelper.add(args[0], currentDirectory);
+        break;
+      case 'rn':
+        fileHelper.rename(args[0], args[1]);
+        break;
+      case 'cp':
+        fileHelper.copy(args[0], args[1]);
+        break;
+      case 'mv':
+        fileHelper.move(args[0], args[1]);
+        break;
+      case 'rm':
+        fileHelper.remove(args[0]);
+        break;
       case 'os':
         osHelper(args[0]);
         break;
