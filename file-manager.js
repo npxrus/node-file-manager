@@ -1,6 +1,7 @@
 const readline = require('readline');
 const osHelper = require('./helpers/os.helper.js');
 const hashHelper = require('./helpers/hash.helper.js');
+const zipHelper = require('./helpers/zip.helper');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -22,6 +23,12 @@ const init = () => {
         break;
       case 'hash':
         hashHelper(args[0]);
+        break;
+      case 'compress':
+        zipHelper.compress(args[0], args[1]);
+        break;
+      case 'decompress':
+        zipHelper.decompress(args[0], args[1]);
         break;
       case '.exit':
         console.log(`Thank you for using File Manager, ${username}!`);
