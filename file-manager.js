@@ -1,5 +1,6 @@
 const readline = require('readline');
 const osHelper = require('./helpers/os.helper.js');
+const hashHelper = require('./helpers/hash.helper.js');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -18,6 +19,9 @@ const init = () => {
     switch (command) {
       case 'os':
         osHelper(args[0]);
+        break;
+      case 'hash':
+        hashHelper(args[0]);
         break;
       case '.exit':
         console.log(`Thank you for using File Manager, ${username}!`);
